@@ -79,7 +79,7 @@ Using Exploratory Data Analysis(EDA), we will visualize the data to enhance our 
 
 
 
-![Image A](Images/A.png)
+![Image A](Images/A.PNG)
 
 Interpretation:
 there gradual decrease over the Years.
@@ -87,7 +87,7 @@ there gradual decrease over the Years.
 The darker the colour the higher the number of accidents
 
 #####  Accidents by Country
-![Image B](Images/B.png)
+![Image B](Images/B.PNG)
 
 
 Interpretation:
@@ -97,7 +97,7 @@ The United States has significantly high number of accidents compared to the res
 Examine the relationship between weather conditions and accident severity.
 
 
-![Image C](Images/C.png)
+![Image C](Images/C.PNG)
 
 Interpretation:
 vmc means  fly by visual, on clear weather
@@ -107,7 +107,7 @@ From the bar plot above most crashes occur on clear weather(vmc) meaning that we
  Compare accident counts by aircraft make
 
 
-![Image D](Images/D.png)
+![Image D](Images/D.PNG)
 Interpretation:
  The number of accidents in cessna is significatly higher than the other aeroplane makes  
 
