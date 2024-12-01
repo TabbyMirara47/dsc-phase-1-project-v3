@@ -50,112 +50,21 @@ The business problem is, the company is interested in purchasing and operating a
 
 Load the dataset
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-%matplotlib inline
 
-# Rename the data df 
-
-df = pd.read_csv('Aviation_Data.csv')
-df
-
-Examine the structure of your dataset
-
-# Know the type, columns and number of rows
-df.info()
-
-# summary statistics for numerical columns
-df.describe()
-
-# check the number of rows and columns
-df.shape
-
-# check unique values for categorical columns
-df.nunique()
 
 ### 3. Data Cleaning and Analysis
  This involves tasks like removing duplicates, filling in missing values, fixing errors, and standardizing formats.
 
-# check for missing values
-missing_values = df.isna().sum()
-print(missing_values[missing_values > 0])
+
 
 
 ##### handling missing data
  Removing the  rows and columns with excessive missing values.
  The threshold for the columns will be 50%
 
-# Dropping columns with too many missing values(more than 50% missing values)
-# define the threshold
-threshold = len(df)*0.5
-
-#Drop Columns with more than 50% missing values
-df_clean= df.dropna(axis=1, thresh=threshold)
-
-print(df_clean.columns)
 
 
-
-
-df_clean.info()
-
-Fill the rest of the missing values whose threshold is less than 50%.
-
-# for numerical columns, fill missing with median
-numerical_columns = df_clean.select_dtypes(include=['float64', 'int64']).columns
-for col in numerical_columns:
-    df_clean[col].fillna(df_clean[col].mode()[0],inplace=True)
-
-
-
-# For categoricalcolumns, fill missing with mode
-categorical_columns = df_clean.select_dtypes(include=['object']).columns
-for col in categorical_columns:
-    df_clean[col].fillna(df_clean[col].mode()[0],inplace=True)
-
-We will run the cell below to ensure that the above steps have worked by filling the miising values and removing the columns that have more than 50% missing values
-
-df_clean.info()
-
-Convert the necessary columns with floats to integers.
- The necessary columns are :Number.of.Engines, 
-                            Total.Fatal.Injuries, 
-                            Total.Serious.Injuries, 
-                            Total.Minor.Injuries. 
-                            
-as shown below                            
-
-df.dtypes
-
-# List of columns to convert
-columns_to_convert = [
-    'Total.Fatal.Injuries',
-    'Total.Serious.Injuries',
-    'Total.Minor.Injuries',
-    'Total.Uninjured'
-]
-
-# Convert columns to integers
-df_clean[columns_to_convert] = df_clean[columns_to_convert].astype(int)
-
-# Verify the conversion
-print(df_clean[columns_to_convert].dtypes)
-
-We will also need to convert thw Number.of.Engines column to integer.
-
-df_clean['Number.of.Engines'] = df_clean['Number.of.Engines'].astype(int)
-print(df_clean['Number.of.Engines'].dtypes)
-
-The columns have been converted to integer as shown below 
-
-df_clean.dtypes
-
-Confirm that the data has no missing values.
-
-df_clean.isna().sum()
 
 ### 4. Data Visualization
 
@@ -163,21 +72,12 @@ Using Exploratory Data Analysis(EDA), we will visualize the data to enhance our 
 
 
 
-# Let's get a statistical summary of the numerical features
-#Summary statistics for numerical columns
-print(df_clean[numerical_columns].describe())
 
 ##### Analyze how aviation accidents have trended over the years.
 
-Analysis to see how the number of accidents have been for the past years
 
-# Convert 'Event.Date' to datetime if it's not already
-df_clean['Event.Date'] = pd.to_datetime(df_clean['Event.Date'], errors='coerce')
 
-# Extract the 'Year' from the 'Event.Date'
-df_clean['Year'] = df_clean['Event.Date'].dt.year
 
-# Plot number of accidents per year
 
 ![Image A](Images/A.png)
 
@@ -196,7 +96,7 @@ The United States has significantly high number of accidents compared to the res
 #####  Weather Conditions and Accidents
 Examine the relationship between weather conditions and accident severity.
 
-# Count of accidents by weather condition
+
 ![Image C](Images/C.png)
 
 Interpretation:
@@ -206,31 +106,6 @@ From the bar plot above most crashes occur on clear weather(vmc) meaning that we
 ##### Accident counts by aircraft Make
  Compare accident counts by aircraft make
 
-# We will be using the 'Make' column
-df_clean['Make'].head(20)
-
-
-# Count the number of accidents per aircraft type
-df_clean['Make'].value_counts()
-
-
-
-
-# Replacing repeated values in the Make column
-Make_clean = df_clean['Make'].replace(['CESSNA', 'PIPER', 'BEECH', 'BELL', 'BOEING'], ['Cessna','Piper' ,'Beech', 'Bell', 'Boeing'])
-Make_clean.head(10)
-
-accident_counts= Make_clean.value_counts()
-accident_counts
-
-accident_counts.head(20)
-
-# Convert to DataFrame for easier plotting
-accident_counts_df = accident_counts.reset_index()
-accident_counts_df.columns = ['Make', 'Number of Accidents']
-accident_counts_df 
-
-# Plot a bar chart
 
 ![Image D](Images/D.png)
 Interpretation:
